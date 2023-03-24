@@ -40,31 +40,31 @@ class OIDplusPhp extends OIDplusObject {
 		return new self($className);
 	}
 
-	public static function objectTypeTitle() {
+	public static function objectTypeTitle() :string{
 		return _L('PHP classes');
 	}
 
-	public static function objectTypeTitleShort() {
+	public static function objectTypeTitleShort():string {
 		return _L('Class');
 	}
 
-	public static function ns() {
+	public static function ns():string {
 		return 'php';
 	}
 
-	public static function root() {
+	public static function root() :string{
 		return self::ns().':';
 	}
 
-	public function isRoot() {
+	public function isRoot() :bool{
 		return $this->className === '';
 	}
 
-	public function nodeId($with_ns=true) {
+	public function nodeId(bool $with_ns=true) :string {
 		return $with_ns ? self::root().$this->className : $this->className;
 	}
 
-	public function addString($str) {
+	public function addString(string $str) :string{
 		if ($this->isRoot()) {
 			return self::root() . $str;
 		} else {
@@ -72,7 +72,7 @@ class OIDplusPhp extends OIDplusObject {
 		}
 	}
 
-	public function crudShowId(OIDplusObject $parent) {
+	public function crudShowId(\ViaThinkSoft\OIDplus\OIDplusObject $parent): string {
 		if ($parent->isRoot()) {
 			return substr($this->nodeId(), strlen($parent->nodeId()));
 		} else {
@@ -80,7 +80,7 @@ class OIDplusPhp extends OIDplusObject {
 		}
 	}
 
-	public function jsTreeNodeName(OIDplusObject $parent = null) {
+	public function jsTreeNodeName(?\ViaThinkSoft\OIDplus\OIDplusObject $parent = null): string {
 		if ($parent == null) return $this->objectTypeTitle();
 		if ($parent->isRoot()) {
 			return substr($this->nodeId(), strlen($parent->nodeId()));
@@ -89,13 +89,13 @@ class OIDplusPhp extends OIDplusObject {
 		}
 	}
 
-	public function defaultTitle() {
+	public function defaultTitle() :string{
 		$ary = explode('\\', $this->className); // TODO: but if an arc contains "\", this does not work. better read from db?
 		$ary = array_reverse($ary);
 		return $ary[0];
 	}
 
-	public function isLeafNode() {
+	public function isLeafNode():bool {
 		return false;
 	}
 
@@ -179,13 +179,13 @@ class OIDplusPhp extends OIDplusObject {
 		return count($ary) - count($bry);
 	}
 
-	public function getDirectoryName() {
+	public function getDirectoryName() :string{
 		if ($this->isRoot()) return $this->ns();
 	//	return $this->ns().'_'.md5($this->nodeId(false));
 		return $this->ns().str_replace(['\\', "/"], [\DIRECTORY_SEPARATOR, \DIRECTORY_SEPARATOR], $this->nodeId(false));
 	}
 
-	public static function treeIconFilename($mode) {
+	public static function treeIconFilename(string $mode): string{
 		return 'img/page_php.gif';
 	}
 }
