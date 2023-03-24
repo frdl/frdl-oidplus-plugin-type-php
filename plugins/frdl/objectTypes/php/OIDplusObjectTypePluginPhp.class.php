@@ -27,7 +27,7 @@ use ViaThinkSoft\OIDplus\OIDplusException;
 
 class OIDplusObjectTypePluginPhp extends  OIDplusObjectTypePlugin {
 
-	public static function getObjectTypeClassName() {
+	public static function getObjectTypeClassName() :string{
 		return OIDplusPhp::class;
 	}
 
